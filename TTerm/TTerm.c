@@ -354,7 +354,7 @@ uint8_t TERM_handleInput(uint16_t c, TERMINAL_HANDLE * handle){
             //TODO reset current buffer
             ttprintfEcho("^C");
             break;
-            
+        case 0x0a: 		//LF
         case 0x08:      //backspace (used by xTerm)
         case 0x7f:      //DEL       (used by hTerm)
             TERM_checkForCopy(handle, TERM_CHECK_COMP_AND_HIST);

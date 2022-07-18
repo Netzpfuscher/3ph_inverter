@@ -22,6 +22,7 @@
 #include "adc.h"
 #include "dma.h"
 #include "fatfs.h"
+#include "lwip.h"
 #include "sdio.h"
 #include "spi.h"
 #include "tim.h"

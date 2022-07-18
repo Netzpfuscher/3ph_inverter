@@ -26,6 +26,9 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "init.h"
+#include "lwip.h"
+#include "udp.h"
+#include "string.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -63,6 +66,7 @@ const osThreadAttr_t defaultTask_attributes = {
 void StartDefaultTask(void *argument);
 
 extern void MX_USB_DEVICE_Init(void);
+extern void MX_LWIP_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
@@ -117,12 +121,34 @@ void StartDefaultTask(void *argument)
 {
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
+
+  /* init code for LWIP */
+  MX_LWIP_Init();
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
+/*  const char* message = "Hello UDP message!\n\r";
+
+  osDelay(5000);
+
+  ip_addr_t PC_IPADDR;
+  IP_ADDR4(&PC_IPADDR, 192, 168, 1, 1);
+
+  struct udp_pcb* my_udp = udp_new();
+  udp_connect(my_udp, &PC_IPADDR, 55151);
+  struct pbuf* udp_buffer = NULL;
+*/
   for(;;)
   {
 	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
     osDelay(100);
+
+    /*udp_buffer = pbuf_alloc(PBUF_TRANSPORT, strlen(message), PBUF_RAM);
+
+      if (udp_buffer != NULL) {
+        memcpy(udp_buffer->payload, message, strlen(message));
+        udp_send(my_udp, udp_buffer);
+        pbuf_free(udp_buffer);
+      }*/
   }
   /* USER CODE END StartDefaultTask */
 }
